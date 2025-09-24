@@ -5,7 +5,7 @@
       <!-- Form Column -->
       <div class="space-y-6 pb-20 sm:pb-10">
         <!-- Section Tabs -->
-        <nav role="tablist" class="mb-4 flex items-center gap-2 flex-nowrap tabs-scroll" aria-label="Sections">
+        <nav role="tablist" class="mb-4 flex items-center gap-2 flex-nowrap overflow-x-auto" aria-label="Sections">
           <button
             v-for="t in tabs"
             :key="t.id"
@@ -15,6 +15,30 @@
             :class="['rounded-md px-3 py-1 text-sm font-medium focus:outline-none', currentTab === t.id ? 'bg-blue-600 text-white' : 'text-slate-700 ring-1 ring-slate-100 hover:bg-slate-50']"
           >{{ t.label }}</button>
         </nav>
+
+        <!-- Layout / Sections -->
+        <FormStep id="layout" title="Sections" description="Show, hide, and reorder sections." v-show="currentTab === 'layout'">
+          <div class="space-y-2">
+            <div
+              v-for="(sid, i) in resume.sectionOrder"
+              :key="sid"
+              class="flex items-center justify-between rounded-lg border border-slate-200 bg-white px-3 py-2"
+              draggable="true"
+              @dragstart="onDragStart(i)"
+              @dragover.prevent
+              @drop="onDrop(i)"
+            >
+              <div class="flex items-center gap-2">
+                <span class="cursor-grab select-none text-slate-400">≡</span>
+                <span class="text-sm font-medium text-slate-700">{{ sectionLabels[sid] || sid }}</span>
+              </div>
+              <label class="inline-flex items-center gap-2 text-sm text-slate-700">
+                <input type="checkbox" v-model="resume.sectionVisibility[sid]" class="h-4 w-4 rounded border-slate-300 text-blue-600 focus:ring-blue-600" />
+                Visible
+              </label>
+            </div>
+          </div>
+        </FormStep>
 
         <!-- Personal Info -->
         <FormStep id="personal-info" title="Personal Info" description="Tell us who you are and how to reach you." v-show="currentTab === 'personal-info'">
@@ -218,7 +242,7 @@
 
         <div class="z-50 mt-6">
           <!-- fixed on mobile, relative on sm+ -->
-          <div class="fixed bottom-0 left-0 w-full bg-white/90 border-t border-slate-200 py-3 sm:static sm:bg-transparent sm:border-0">
+          <div class=" left-0 w-full bg-white/90 rounded-lg border border-slate-200 py-3 sm:static sm:bg-transparent sm:border-0">
             <div class="mx-auto max-w-7xl px-4">
               <div class="flex items-center justify-between gap-3">
                 <button @click="goPrev" :disabled="isFirst" class="inline-flex items-center gap-2 rounded-lg border border-slate-300 bg-white px-3 py-2 text-sm font-medium text-slate-700 shadow-sm hover:bg-slate-50 disabled:opacity-50 disabled:cursor-not-allowed">
@@ -258,7 +282,7 @@ import type { ResumeData } from '~/components/ResumeTemplate.vue'
 
 onMounted(() => {
   setMeta({
-    title: 'SwiftResume — Build ATS-friendly resumes',
+    title: 'Resume Mate — Build ATS-friendly resumes',
     description: 'Create ATS-optimized resumes with live preview, local drafts, and PDF export. Privacy-first and easy to use.',
     url: window.location.href,
   })
@@ -287,6 +311,7 @@ onUnmounted(() => {
 const resume = ref<ResumeData>(createReactiveResume() as unknown as ResumeData)
 
 const tabs = [
+  { id: 'layout', label: 'Sections' },
   { id: 'personal-info', label: 'Personal' },
   { id: 'summary', label: 'Summary' },
   { id: 'skills', label: 'Skills' },
@@ -400,6 +425,30 @@ function scrollToTab() {
     if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' })
   }, 50)
 }
+
+// Drag and drop for section order
+let dragIndex = -1
+function onDragStart(index: number) {
+  dragIndex = index
+}
+function onDrop(targetIndex: number) {
+  if (dragIndex === -1 || dragIndex === targetIndex) return
+  const order = [...(resume.value.sectionOrder || [])]
+  const [moved] = order.splice(dragIndex, 1)
+  order.splice(targetIndex, 0, moved)
+  resume.value.sectionOrder = order as any
+  dragIndex = -1
+}
+
+const sectionLabels: Record<string, string> = {
+  personal: 'Personal Info',
+  summary: 'Summary',
+  skills: 'Skills',
+  languages: 'Languages',
+  experience: 'Experience',
+  projects: 'Projects',
+  education: 'Education',
+}
 </script>
 
 <style scoped>
@@ -408,5 +457,62 @@ function scrollToTab() {
 }
 .form-textarea {
   @apply mt-1 w-full rounded-lg border border-slate-300 bg-white px-3 py-2 text-sm text-slate-800 shadow-sm outline-none ring-0 placeholder:text-slate-400 focus:border-blue-600 focus:ring-2 focus:ring-blue-100;
+}
+/* Make top tabs horizontally scrollable on small screens */
+.tabs-scroll {
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: none;
+}
+
+/* update cursor when dragging */
+[draggable="true"]:active {
+  cursor: grabbing !important;
+}
+[draggable="true"] {
+  cursor: grab;
+}
+/* Hide number input spinners */
+input[type="number"]::-webkit-inner-spin-button,
+input[type="number"]::-webkit-outer-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+input[type="number"] {
+  -moz-appearance: textfield;
+}
+/* Fix for iOS Safari zooming in on inputs */
+input, textarea,
+select {
+  font-size: 16px;
+}
+/* Prevent layout shift when fonts load */
+body {
+  font-display: swap;
+}
+/* Smooth scrolling for anchor links */
+html {
+  scroll-behavior: smooth;
+}
+/* Prevent horizontal layout shift when showing focus ring */
+button:focus,
+input:focus,
+textarea:focus {
+  outline-offset: 2px;
+}
+/* Reduce motion for users who prefer it */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+/* PDF export: avoid page breaks inside sections */
+@media print {
+  section {
+    page-break-inside: avoid;
+  }
 }
 </style>

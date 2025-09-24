@@ -24,26 +24,28 @@
         </div>
       </header>
 
-      <!-- Summary (high priority for recruiters) -->
-      <section v-if="data.summary" aria-labelledby="summary-heading" class="mb-4 pt-3 border-t border-slate-100">
+      <!-- Render sections in selected order -->
+      <template v-for="sid in orderedSections" :key="sid">
+        <!-- Summary (high priority for recruiters) -->
+        <section v-if="sid === 'summary' && isVisible('summary') && data.summary" aria-labelledby="summary-heading" class="mb-4 border-slate-100">
         <h2 id="summary-heading" class="text-sm font-semibold uppercase tracking-wider text-slate-700">Summary</h2>
         <p class="mt-1 text-[13.5px] leading-relaxed text-slate-800">{{ data.summary }}</p>
-      </section>
+        </section>
 
-      <!-- Skills: inline, comma-separated for quick keyword scanning -->
-      <section v-if="skillsText" aria-labelledby="skills-heading" class="mb-4 pt-3 border-t border-slate-100">
+        <!-- Skills: inline, comma-separated for quick keyword scanning -->
+        <section v-if="sid === 'skills' && isVisible('skills') && skillsText" aria-labelledby="skills-heading" class="mb-4 pt-3 border-t border-slate-100">
         <h2 id="skills-heading" class="text-sm font-semibold uppercase tracking-wider text-slate-700">Skills</h2>
         <p class="mt-1 text-[13.5px] text-slate-800">{{ skillsText }}</p>
-      </section>
+        </section>
 
-      <!-- Languages -->
-      <section v-if="languagesText" aria-labelledby="languages-heading" class="mb-4 pt-3 border-t border-slate-100">
+        <!-- Languages -->
+        <section v-if="sid === 'languages' && isVisible('languages') && languagesText" aria-labelledby="languages-heading" class="mb-4 pt-3 border-t border-slate-100">
         <h2 id="languages-heading" class="text-sm font-semibold uppercase tracking-wider text-slate-700">Languages</h2>
         <p class="mt-1 text-[13.5px] text-slate-800">{{ languagesText }}</p>
-      </section>
+        </section>
 
-      <!-- Experience: clear, chronological, bullets for achievements -->
-      <section v-if="data.experience.length" aria-labelledby="exp-heading" class="mb-4 pt-3 border-t border-slate-100">
+        <!-- Experience: clear, chronological, bullets for achievements -->
+        <section v-if="sid === 'experience' && isVisible('experience') && data.experience.length" aria-labelledby="exp-heading" class="mb-4 pt-3 border-t border-slate-100">
         <h2 id="exp-heading" class="text-sm font-semibold uppercase tracking-wider text-slate-700">Experience</h2>
         <div class="mt-2 space-y-4">
           <div v-for="(job, jIdx) in data.experience" :key="jIdx">
@@ -69,10 +71,10 @@
             </ul>
           </div>
         </div>
-      </section>
+        </section>
 
-      <!-- Projects / Certifications: optional but visible -->
-      <section v-if="data.projects.length" aria-labelledby="projects-heading" class="mb-4 pt-3 border-t border-slate-100">
+        <!-- Projects / Certifications: optional but visible -->
+        <section v-if="sid === 'projects' && isVisible('projects') && data.projects.length" aria-labelledby="projects-heading" class="mb-4 pt-3 border-t border-slate-100">
         <h2 id="projects-heading" class="text-sm font-semibold uppercase tracking-wider text-slate-700">Projects & Certifications</h2>
         <div class="mt-2 space-y-3">
           <div v-for="(p, pIdx) in data.projects" :key="pIdx">
@@ -84,10 +86,10 @@
             <p v-if="p.description" class="mt-1 text-[13.5px] text-slate-800">{{ p.description }}</p>
           </div>
         </div>
-      </section>
+        </section>
 
-      <!-- Education: concise, latest first -->
-      <section v-if="data.education.length" aria-labelledby="edu-heading" class="mb-2 pt-3 border-t border-slate-100">
+        <!-- Education: concise, latest first -->
+        <section v-if="sid === 'education' && isVisible('education') && data.education.length" aria-labelledby="edu-heading" class="mb-2 pt-3 border-t border-slate-100">
         <h2 id="edu-heading" class="text-sm font-semibold uppercase tracking-wider text-slate-700">Education</h2>
         <div class="mt-2 space-y-2">
           <div v-for="(ed, eIdx) in data.education" :key="eIdx">
@@ -98,7 +100,8 @@
             <p v-if="ed.location || ed.details" class="mt-1 text-[13px] text-slate-800">{{ ed.location }}<span v-if="ed.location && ed.details"> • </span>{{ ed.details }}</p>
           </div>
         </div>
-      </section>
+        </section>
+      </template>
     </article>
   </div>
 </template>
@@ -144,6 +147,8 @@ export interface ResumeData {
     date: string
   }>
   languages: string[]
+  sectionOrder?: string[]
+  sectionVisibility?: Record<string, boolean>
 }
 
 const props = defineProps<{ data: ResumeData }>()
@@ -176,6 +181,23 @@ function toUrl(val: string) {
 }
 function cleanUrl(val: string) {
   return val.replace(/^https?:\/\//i, '')
+}
+
+// Section ordering and visibility
+const allSections = ['summary', 'skills', 'languages', 'experience', 'projects', 'education']
+const orderedSections = computed(() => {
+  const order = (props.data.sectionOrder && props.data.sectionOrder.length) ? props.data.sectionOrder : allSections
+  // filter to known sections and de-dup
+  const seen = new Set<string>()
+  const list = order.filter((s) => allSections.includes(s) && !seen.has(s) && seen.add(s))
+  // append any missing sections at the end
+  for (const s of allSections) if (!seen.has(s)) list.push(s)
+  return list
+})
+const isVisible = (id: string) => {
+  const vis = props.data.sectionVisibility || {}
+  if (typeof vis[id] === 'boolean') return !!vis[id]
+  return true
 }
 </script>
 

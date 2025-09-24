@@ -38,6 +38,8 @@ export interface ResumeState {
     date: string
   }>
   languages: string[]
+  sectionOrder: string[]
+  sectionVisibility: Record<string, boolean>
 }
 
 export const STORAGE_KEY = 'resume_draft_v1'
@@ -63,6 +65,16 @@ export function defaultResume(): ResumeState {
     skills: [],
     projects: [{ name: '', link: '', description: '', date: '' }],
     languages: [],
+    sectionOrder: ['personal', 'summary', 'skills', 'languages', 'experience', 'projects', 'education'],
+    sectionVisibility: {
+      summary: true,
+      personal: false, // Not a real section to show/hide in preview
+      skills: true,
+      languages: true,
+      experience: true,
+      projects: true,
+      education: true,
+    },
   }
 }
 
@@ -71,7 +83,13 @@ export function loadDraft(): ResumeState {
     const raw = localStorage.getItem(STORAGE_KEY)
     if (!raw) return defaultResume()
     const parsed = JSON.parse(raw)
-    return { ...defaultResume(), ...parsed }
+    const base = defaultResume()
+    return {
+      ...base,
+      ...parsed,
+      sectionOrder: parsed.sectionOrder || base.sectionOrder,
+      sectionVisibility: { ...base.sectionVisibility, ...(parsed.sectionVisibility || {}) },
+    }
   } catch {
     return defaultResume()
   }
