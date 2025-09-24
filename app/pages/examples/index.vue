@@ -43,8 +43,8 @@
     </article>
 
     <div class="mt-8">
-      <a href="#/tips" class="inline-block rounded-lg bg-blue-600 px-4 py-2 text-sm font-medium text-white hover:bg-blue-700">See Tips</a>
-      <a href="#/" class="ml-3 inline-block rounded-lg border border-slate-300 px-4 py-2 text-sm font-medium text-slate-700 hover:bg-slate-50">Back to Builder</a>
+      <NuxtLink to="/tips" class="inline-block rounded-lg bg-blue-600 px-4 py-2 text-sm font-medium text-white hover:bg-blue-700">See Tips</NuxtLink>
+      <NuxtLink to="/" class="ml-3 inline-block rounded-lg border border-slate-300 px-4 py-2 text-sm font-medium text-slate-700 hover:bg-slate-50">Back to Builder</NuxtLink>
     </div>
   </section>
 </template>

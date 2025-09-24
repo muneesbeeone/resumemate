@@ -1,518 +1,272 @@
 <template>
   <main class="min-h-screen bg-gradient-to-b from-slate-50 to-slate-100">
+    <!-- Hero Section -->
+    <div class="relative bg-white text-center px-6 py-20 sm:py-28">
+      <div class="max-w-4xl mx-auto">
+        <!-- SEO-Friendly Main Heading -->
+        <h1 class="text-4xl sm:text-5xl md:text-6xl font-extrabold tracking-tight text-slate-900 leading-tight">
+          Free Online Resume Builder – Create an ATS-Friendly Resume in Minutes
+        </h1>
 
-    <div class="mx-auto max-w-7xl gap-6 px-4 py-6 lg:grid lg:grid-cols-2">
-      <!-- Form Column -->
-      <div class="space-y-6 pb-20 sm:pb-10">
-        <!-- Section Tabs -->
-        <nav role="tablist" class="mb-4 flex items-center gap-2 flex-nowrap overflow-x-auto" aria-label="Sections">
-          <button
-            v-for="t in tabs"
-            :key="t.id"
-            role="tab"
-            :aria-selected="currentTab === t.id"
-            @click="currentTab = t.id"
-            :class="['rounded-md px-3 py-1 text-sm font-medium focus:outline-none', currentTab === t.id ? 'bg-blue-600 text-white' : 'text-slate-700 ring-1 ring-slate-100 hover:bg-slate-50']"
-          >{{ t.label }}</button>
-        </nav>
+        <!-- Supporting SEO text -->
+        <p class="mt-6 text-lg sm:text-xl text-slate-600 max-w-2xl mx-auto">
+          Build a job-winning resume that recruiters and Applicant Tracking Systems (ATS) love.
+          Our free resume builder helps you create a professional CV with real-time preview,
+          modern templates, and optimized formatting.
+        </p>
 
-        <!-- Layout / Sections -->
-        <FormStep id="layout" title="Sections" description="Show, hide, and reorder sections." v-show="currentTab === 'layout'">
-          <div class="space-y-2">
-            <div
-              v-for="(sid, i) in resume.sectionOrder"
-              :key="sid"
-              class="flex items-center justify-between rounded-lg border border-slate-200 bg-white px-3 py-2"
-              draggable="true"
-              @dragstart="onDragStart(i)"
-              @dragover.prevent
-              @drop="onDrop(i)"
-            >
-              <div class="flex items-center gap-2">
-                <span class="cursor-grab select-none text-slate-400">≡</span>
-                <span class="text-sm font-medium text-slate-700">{{ sectionLabels[sid] || sid }}</span>
-              </div>
-              <label class="inline-flex items-center gap-2 text-sm text-slate-700">
-                <input type="checkbox" v-model="resume.sectionVisibility[sid]" class="h-4 w-4 rounded border-slate-300 text-blue-600 focus:ring-blue-600" />
-                Visible
-              </label>
-            </div>
-          </div>
-        </FormStep>
+        <!-- CTA Buttons -->
+        <div class="mt-10 flex flex-col sm:flex-row justify-center gap-4">
+          <NuxtLink to="/builder"
+            class="inline-flex items-center justify-center px-8 py-3 text-base font-semibold rounded-xl text-white bg-blue-600 hover:bg-blue-700 shadow-lg transition">
+            Start Building Your Resume
+          </NuxtLink>
+          <NuxtLink to="/examples"
+            class="inline-flex items-center justify-center px-8 py-3 text-base font-medium rounded-xl text-blue-600 border border-blue-600 hover:bg-blue-50 transition">
+            View Resume Examples
+          </NuxtLink>
+        </div>
 
-        <!-- Personal Info -->
-        <FormStep id="personal-info" title="Personal Info" description="Tell us who you are and how to reach you." v-show="currentTab === 'personal-info'">
-          <div class="grid grid-cols-1 gap-4 sm:grid-cols-2">
-            <div>
-              <label class="text-sm font-medium text-slate-700">First Name</label>
-              <input v-model="resume.personal.firstName" type="text" class="form-input" />
-            </div>
-            <div>
-              <label class="text-sm font-medium text-slate-700">Last Name</label>
-              <input v-model="resume.personal.lastName" type="text" class="form-input" />
-            </div>
-          </div>
+        <!-- SEO Subtext -->
+        <p class="mt-6 text-sm text-slate-500 max-w-xl mx-auto">
+          100% free, no sign-up required. Optimized for job portals like LinkedIn, Naukri, Indeed, and more.
+        </p>
+      </div>
+    </div>
 
-          <div class="mt-3">
-            <label class="text-sm font-medium text-slate-700">Professional Title</label>
-            <input v-model="resume.personal.professionalTitle" type="text" class="form-input" placeholder="e.g. Senior Frontend Engineer" />
-          </div>
-          <div class="grid grid-cols-1 gap-4 sm:grid-cols-2">
-            <div>
-              <label class="text-sm font-medium text-slate-700">Email</label>
-              <input v-model="resume.personal.email" type="email" class="form-input" />
-            </div>
-            <div>
-              <label class="text-sm font-medium text-slate-700">Phone</label>
-              <input v-model="resume.personal.phone" type="tel" class="form-input" />
-            </div>
-          </div>
-          <div class="grid grid-cols-1 gap-4 sm:grid-cols-3">
-            <div>
-              <label class="text-sm font-medium text-slate-700">Location</label>
-              <input v-model="resume.personal.location" type="text" class="form-input" />
-            </div>
-            <div>
-              <label class="text-sm font-medium text-slate-700">Website</label>
-              <input v-model="resume.personal.website" type="url" class="form-input" placeholder="example.com" />
-            </div>
-            <div>
-              <label class="text-sm font-medium text-slate-700">LinkedIn</label>
-              <input v-model="resume.personal.linkedin" type="url" class="form-input" placeholder="linkedin.com/in/you" />
-            </div>
-          </div>
-          <div>
-            <label class="text-sm font-medium text-slate-700">GitHub</label>
-            <input v-model="resume.personal.github" type="url" class="form-input" placeholder="github.com/you" />
-          </div>
-        </FormStep>
 
-        <!-- Summary -->
-        <FormStep id="summary" title="Professional Summary" description="Briefly summarize your experience and strengths." v-show="currentTab === 'summary'">
-          <textarea v-model="resume.summary" rows="4" class="form-textarea" />
-        </FormStep>
+    <!-- Features Section -->
+    <div class="py-12 bg-slate-50">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="lg:text-center">
+          <h2 class="text-base text-blue-600 font-semibold tracking-wide uppercase">Features</h2>
+          <p class="mt-2 text-3xl leading-8 font-extrabold tracking-tight text-gray-900 sm:text-4xl">
+            Everything you need to create the perfect resume
+          </p>
+        </div>
 
-        <!-- Experience -->
-        <FormStep id="experience" title="Work Experience" description="List your recent roles and key achievements." v-show="currentTab === 'experience'">
-          <div v-for="(job, i) in resume.experience" :key="i" class="rounded-lg border border-slate-200 p-4">
-            <div class="grid grid-cols-1 gap-4 sm:grid-cols-2">
-              <div>
-                <label class="text-sm font-medium text-slate-700">Title</label>
-                <input v-model="job.title" type="text" class="form-input" />
-              </div>
-              <div>
-                <label class="text-sm font-medium text-slate-700">Company</label>
-                <input v-model="job.company" type="text" class="form-input" />
-              </div>
-            </div>
-            <div class="grid grid-cols-1 gap-4 sm:grid-cols-3">
-              <div>
-                <label class="text-sm font-medium text-slate-700">Location</label>
-                <input v-model="job.location" type="text" class="form-input" />
-              </div>
-              <div>
-                <label class="text-sm font-medium text-slate-700">Start</label>
-                <input v-model="job.start" type="text" class="form-input" placeholder="Jan 2022" />
-              </div>
-              <div>
-                <label class="text-sm font-medium text-slate-700">End</label>
-                <input v-model="job.end" :disabled="job.current" type="text" class="form-input" placeholder="Dec 2023" />
-              </div>
-            </div>
-            <label class="mt-2 inline-flex items-center gap-2 text-sm text-slate-700">
-              <input v-model="job.current" type="checkbox" class="h-4 w-4 rounded border-slate-300 text-blue-600 focus:ring-blue-600" />
-              Currently working here
-            </label>
-            <div class="mt-3">
-              <div class="mb-2 flex items-center justify-between">
-                <span class="text-sm font-medium text-slate-700">Key Achievements</span>
-                <button @click="job.bullets.push('')" class="rounded-md bg-slate-100 px-2 py-1 text-xs font-medium text-slate-700 hover:bg-slate-200">Add Bullet</button>
-              </div>
-              <div class="space-y-2">
-                <div v-for="(b, bi) in job.bullets" :key="bi" class="flex items-start gap-2">
-                  <input v-model="job.bullets[bi]" type="text" class="form-input flex-1" placeholder="What did you accomplish?" />
-                  <button @click="removeBullet(i, bi)" class="rounded-md border border-slate-300 px-2 py-1 text-xs text-slate-600 hover:bg-slate-50">Remove</button>
+        <div class="mt-10">
+          <dl class="space-y-10 md:space-y-0 md:grid md:grid-cols-2 md:gap-x-8 md:gap-y-10">
+            <div class="relative">
+              <dt>
+                <div class="absolute flex h-12 w-12 items-center justify-center rounded-md bg-blue-600 text-white">
+                  <svg class="h-6 w-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
+                    stroke-width="1.5" stroke="currentColor" aria-hidden="true">
+                    <path stroke-linecap="round" stroke-linejoin="round"
+                      d="M19.5 14.25v-2.625a3.375 3.375 0 00-3.375-3.375h-1.5A1.125 1.125 0 0113.5 7.125v-1.5a3.375 3.375 0 00-3.375-3.375H8.25m0 12.75h7.5m-7.5 3H12M10.5 2.25H5.625c-.621 0-1.125.504-1.125 1.125v17.25c0 .621.504 1.125 1.125 1.125h12.75c.621 0 1.125-.504 1.125-1.125V11.25a9 9 0 00-9-9z" />
+                  </svg>
                 </div>
-              </div>
+                <p class="ml-16 text-lg leading-6 font-medium text-gray-900">ATS-Friendly Resume Templates</p>
+              </dt>
+              <dd class="mt-2 ml-16 text-base text-gray-500">
+                Our templates are designed to be easily parsed by Applicant Tracking Systems, ensuring your resume gets
+                seen by recruiters.
+              </dd>
             </div>
-            <div class="mt-3 text-right">
-              <button @click="removeExperience(i)" class="rounded-md border border-rose-200 bg-rose-50 px-2.5 py-1.5 text-xs font-medium text-rose-700 hover:bg-rose-100">Remove Role</button>
+            <div class="relative">
+              <dt>
+                <div class="absolute flex h-12 w-12 items-center justify-center rounded-md bg-blue-600 text-white">
+                  <svg class="h-6 w-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
+                    stroke-width="1.5" stroke="currentColor" aria-hidden="true">
+                    <path stroke-linecap="round" stroke-linejoin="round"
+                      d="M9 17.25v1.007a3 3 0 01-.879 2.122L7.5 21h9l-1.621-.621A3 3 0 0115 18.257V17.25m6-12V15a2.25 2.25 0 01-2.25 2.25H5.25A2.25 2.25 0 013 15V5.25A2.25 2.25 0 015.25 3h13.5A2.25 2.25 0 0121 5.25z" />
+                  </svg>
+                </div>
+                <p class="ml-16 text-lg leading-6 font-medium text-gray-900">Live Preview</p>
+              </dt>
+              <dd class="mt-2 ml-16 text-base text-gray-500">
+                See your changes in real-time as you type. No more guessing what your final resume will look like.
+              </dd>
             </div>
+            <div class="relative">
+              <dt>
+                <div class="absolute flex h-12 w-12 items-center justify-center rounded-md bg-blue-600 text-white">
+                  <svg class="h-6 w-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
+                    stroke-width="1.5" stroke="currentColor" aria-hidden="true">
+                    <path stroke-linecap="round" stroke-linejoin="round"
+                      d="M9 12.75L11.25 15 15 9.75m-3-7.036A11.959 11.959 0 013.598 6 11.99 11.99 0 003 9.749c0 5.592 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.31-.21-2.571-.598-3.751h-.152c-3.196 0-6.1-1.248-8.25-3.286zm0 13.036h.008v.008h-.008v-.008z" />
+                  </svg>
+                </div>
+                <p class="ml-16 text-lg leading-6 font-medium text-gray-900">Privacy First</p>
+              </dt>
+              <dd class="mt-2 ml-16 text-base text-gray-500">
+                Your data is saved directly in your browser. We don't store your personal information on our servers.
+              </dd>
+            </div>
+            <div class="relative">
+              <dt>
+                <div class="absolute flex h-12 w-12 items-center justify-center rounded-md bg-blue-600 text-white">
+                  <svg class="h-6 w-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
+                    stroke-width="1.5" stroke="currentColor" aria-hidden="true">
+                    <path stroke-linecap="round" stroke-linejoin="round"
+                      d="M3 16.5v2.25A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75V16.5M16.5 12L12 16.5m0 0L7.5 12m4.5 4.5V3" />
+                  </svg>
+                </div>
+                <p class="ml-16 text-lg leading-6 font-medium text-gray-900">PDF Export</p>
+              </dt>
+              <dd class="mt-2 ml-16 text-base text-gray-500">
+                Download a pixel-perfect PDF of your resume, ready to be sent to employers.
+              </dd>
+            </div>
+          </dl>
+        </div>
+      </div>
+    </div>
+    <!-- Final CTA -->
+    <div class="text-center px-4 py-16 sm:py-24 bg-white">
+      <h2 class="text-3xl sm:text-4xl font-extrabold tracking-tight text-slate-900">Ready to get started?</h2>
+      <p class="mt-4 text-lg text-slate-600 max-w-2xl mx-auto">It's free and you don't need to create an account.</p>
+      <div class="mt-8">
+        <NuxtLink to="/builder"
+          class="inline-flex items-center justify-center px-8 py-3 border border-transparent text-base font-medium rounded-md text-white bg-blue-600 hover:bg-blue-700 shadow-lg">
+          Create My Resume Now</NuxtLink>
+      </div>
+    </div>
+    <section class="bg-slate-50" aria-labelledby="features-heading">
+      <div class="mx-auto max-w-7xl px-4 py-16 sm:px-6 lg:px-8">
+        <div class="mx-auto text-center">
+          <h2 id="features-heading" class="text-3xl font-bold tracking-tight text-slate-900 sm:text-4xl">Everything You
+            Need to Build a Winning Resume</h2>
+          <p class="mt-4 text-lg leading-8 text-slate-600">Our builder is packed with features designed to make resume
+            writing simple, fast, and effective.</p>
+        </div>
+        <div class="mt-16 grid grid-cols-1 gap-y-12 sm:grid-cols-2 lg:grid-cols-3 lg:gap-x-8">
+          <div class="flex flex-col items-center gap-4 text-center">
+            <div class="flex h-12 w-12 items-center justify-center rounded-xl bg-blue-100 text-blue-600"><svg
+                xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="h-6 w-6">
+                <path
+                  d="M12 2a10 10 0 100 20 10 10 0 000-20zm0 4.5a.75.75 0 01.75.75v5.05l3.22 3.22a.75.75 0 11-1.06 1.06l-3.5-3.5a.75.75 0 01-.22-.53V7.25a.75.75 0 01.75-.75z" />
+              </svg></div>
+            <h3 class="text-lg font-semibold text-slate-800">Real-Time Preview</h3>
+            <p class="text-slate-600">See your resume take shape as you type. Our live preview ensures your final
+              document looks exactly as you intended.</p>
           </div>
-          <button @click="addExperience" class="w-full rounded-lg border border-dashed border-slate-300 bg-white py-2 text-sm font-medium text-slate-700 hover:bg-slate-50">+ Add Experience</button>
-        </FormStep>
-
-        <!-- Education -->
-        <FormStep id="education" title="Education" description="Add your education details." v-show="currentTab === 'education'">
-          <div v-for="(ed, ei) in resume.education" :key="ei" class="rounded-lg border border-slate-200 p-4">
-            <div class="grid grid-cols-1 gap-4 sm:grid-cols-2">
-              <div>
-                <label class="text-sm font-medium text-slate-700">Degree</label>
-                <input v-model="ed.degree" type="text" class="form-input" />
-              </div>
-              <div>
-                <label class="text-sm font-medium text-slate-700">Institution</label>
-                <input v-model="ed.institution" type="text" class="form-input" />
-              </div>
-            </div>
-            <div class="grid grid-cols-1 gap-4 sm:grid-cols-3">
-              <div>
-                <label class="text-sm font-medium text-slate-700">Location</label>
-                <input v-model="ed.location" type="text" class="form-input" />
-              </div>
-              <div>
-                <label class="text-sm font-medium text-slate-700">Start</label>
-                <input v-model="ed.start" type="text" class="form-input" placeholder="2019" />
-              </div>
-              <div>
-                <label class="text-sm font-medium text-slate-700">End</label>
-                <input v-model="ed.end" type="text" class="form-input" placeholder="2023" />
-              </div>
-            </div>
-            <div>
-              <label class="text-sm font-medium text-slate-700">Details</label>
-              <input v-model="ed.details" type="text" class="form-input" placeholder="GPA, honors, coursework" />
-            </div>
-            <div class="mt-3 text-right">
-              <button @click="removeEducation(ei)" class="rounded-md border border-rose-200 bg-rose-50 px-2.5 py-1.5 text-xs font-medium text-rose-700 hover:bg-rose-100">Remove</button>
-            </div>
+          <div class="flex flex-col items-center gap-4 text-center">
+            <div class="flex h-12 w-12 items-center justify-center rounded-xl bg-blue-100 text-blue-600"><svg
+                xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="h-6 w-6">
+                <path fill-rule="evenodd"
+                  d="M12 1.5a5.25 5.25 0 00-5.25 5.25v3a3 3 0 00-3 3v6.75a3 3 0 003 3h10.5a3 3 0 003-3v-6.75a3 3 0 00-3-3v-3c0-2.9-2.35-5.25-5.25-5.25zm3.75 8.25v-3a3.75 3.75 0 10-7.5 0v3h7.5z"
+                  clip-rule="evenodd" />
+              </svg></div>
+            <h3 class="text-lg font-semibold text-slate-800">Privacy First</h3>
+            <p class="text-slate-600">Your data is yours. Everything is stored locally in your browser. No sign-ups, no
+              tracking, no data collection.</p>
           </div>
-          <button @click="addEducation" class="w-full rounded-lg border border-dashed border-slate-300 bg-white py-2 text-sm font-medium text-slate-700 hover:bg-slate-50">+ Add Education</button>
-        </FormStep>
-
-        <!-- Skills -->
-        <FormStep id="skills" title="Skills" description="Add comma-separated skills or individual entries." v-show="currentTab === 'skills'">
-          <div class="space-y-2">
-            <div class="flex items-center gap-2">
-              <input v-model="skillInput" @keyup.enter.prevent="addSkill" type="text" class="form-input flex-1" placeholder="e.g. Vue, TypeScript, TailwindCSS" />
-              <button @click="addSkill" class="rounded-lg bg-slate-800 px-3 py-2 text-sm font-medium text-white hover:bg-slate-900">Add</button>
-            </div>
-            <div class="flex flex-wrap gap-2">
-              <span v-for="(s, si) in resume.skills" :key="si" class="inline-flex items-center gap-1 rounded-full border border-slate-300 bg-white px-2.5 py-1 text-xs text-slate-700">
-                {{ s }}
-                <button @click="removeSkill(si)" class="text-slate-500 hover:text-slate-700">×</button>
-              </span>
-            </div>
-          </div>
-        </FormStep>
-
-        <!-- Languages -->
-        <FormStep id="languages" title="Languages" description="Add languages and proficiency (e.g. English (Native))." v-show="currentTab === 'languages'">
-          <div class="space-y-2">
-            <div class="flex items-center gap-2">
-              <input v-model="languageInput" @keyup.enter.prevent="addLanguage" type="text" class="form-input flex-1" placeholder="e.g. English (Native), Spanish (Professional)" />
-              <button @click="addLanguage" class="rounded-lg bg-slate-800 px-3 py-2 text-sm font-medium text-white hover:bg-slate-900">Add</button>
-            </div>
-            <div class="flex flex-wrap gap-2">
-              <span v-for="(l, li) in resume.languages" :key="li" class="inline-flex items-center gap-1 rounded-full border border-slate-300 bg-white px-2.5 py-1 text-xs text-slate-700">
-                {{ l }}
-                <button @click="removeLanguage(li)" class="text-slate-500 hover:text-slate-700">×</button>
-              </span>
-            </div>
-          </div>
-        </FormStep>
-
-        <!-- Projects & Certifications -->
-        <FormStep id="projects" title="Projects / Certifications" description="Add relevant projects or certifications." v-show="currentTab === 'projects'">
-          <div v-for="(p, pi) in resume.projects" :key="pi" class="rounded-lg border border-slate-200 p-4">
-            <div class="grid grid-cols-1 gap-4 sm:grid-cols-2">
-              <div>
-                <label class="text-sm font-medium text-slate-700">Name</label>
-                <input v-model="p.name" type="text" class="form-input" />
-              </div>
-              <div>
-                <label class="text-sm font-medium text-slate-700">Date</label>
-                <input v-model="p.date" type="text" class="form-input" placeholder="2024" />
-              </div>
-            </div>
-            <div>
-              <label class="text-sm font-medium text-slate-700">Link</label>
-              <input v-model="p.link" type="url" class="form-input" placeholder="yourproject.com" />
-            </div>
-            <div>
-              <label class="text-sm font-medium text-slate-700">Description</label>
-              <textarea v-model="p.description" rows="3" class="form-textarea" />
-            </div>
-            <div class="mt-3 text-right">
-              <button @click="removeProject(pi)" class="rounded-md border border-rose-200 bg-rose-50 px-2.5 py-1.5 text-xs font-medium text-rose-700 hover:bg-rose-100">Remove</button>
-            </div>
-          </div>
-          <button @click="addProject" class="w-full rounded-lg border border-dashed border-slate-300 bg-white py-2 text-sm font-medium text-slate-700 hover:bg-slate-50">+ Add Project/Certification</button>
-        </FormStep>
-
-        <div class="z-50 mt-6">
-          <!-- fixed on mobile, relative on sm+ -->
-          <div class=" left-0 w-full bg-white/90 rounded-lg border border-slate-200 py-3 sm:static sm:bg-transparent sm:border-0">
-            <div class="mx-auto max-w-7xl px-4">
-              <div class="flex items-center justify-between gap-3">
-                <button @click="goPrev" :disabled="isFirst" class="inline-flex items-center gap-2 rounded-lg border border-slate-300 bg-white px-3 py-2 text-sm font-medium text-slate-700 shadow-sm hover:bg-slate-50 disabled:opacity-50 disabled:cursor-not-allowed">
-                  ← Previous
-                </button>
-
-                <div class="text-sm text-slate-600">Section {{ currentIndex + 1 }} of {{ tabs.length }}</div>
-
-                <button @click="goNext" :disabled="isLast" class="inline-flex items-center gap-2 rounded-lg bg-blue-600 px-3 py-2 text-sm font-medium text-white shadow hover:bg-blue-700 disabled:opacity-50 disabled:cursor-not-allowed">
-                  Next →
-                </button>
-              </div>
-            </div>
+          <div class="flex flex-col items-center gap-4 text-center">
+            <div class="flex h-12 w-12 items-center justify-center rounded-xl bg-blue-100 text-blue-600"><svg
+                xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="h-6 w-6">
+                <path
+                  d="M11.25 4.533A9.707 9.707 0 006 3a9.735 9.735 0 00-3.25.555.75.75 0 00-.5.707v14.5a.75.75 0 00.5.707c1.71.374 3.522.555 5.25.555 3.456 0 6.59-1.333 8.685-3.585a.75.75 0 00.22-.508V7.86c-1.95.86-4.223 1.39-6.685 1.39-1.348 0-2.653-.174-3.867-.513V4.533zM12.75 21a9.735 9.735 0 005.25-.555.75.75 0 00.5-.707V9.232c0-.337-.215-.63-.52-.721a25.13 25.13 0 01-4.98.544 25.93 25.93 0 01-4.23-.533.75.75 0 00-.52.721v5.483c1.214.339 2.52.513 3.867.513 2.462 0 4.735-.53 6.685-1.39v3.217a.75.75 0 00-.22.508c-2.096 2.252-5.23 3.585-8.685 3.585z" />
+              </svg></div>
+            <h3 class="text-lg font-semibold text-slate-800">ATS-Optimized</h3>
+            <p class="text-slate-600">Our templates are optimized to pass through Applicant Tracking Systems used by top
+              companies.</p>
           </div>
         </div>
       </div>
-
-      <!-- Preview Column -->
-      <div>
-        <ResumeTemplate :data="resume">
-          <template #controls>
-            <button @click="onExport" class="inline-flex items-center gap-2 rounded-md border border-slate-300 bg-white px-3 py-1.5 text-xs font-medium text-slate-700 shadow-sm hover:bg-slate-50">
-              Export PDF
-            </button>
-          </template>
-        </ResumeTemplate>
+    </section>
+    <!-- SEO Content Section for Home Page -->
+    <section class="bg-white">
+      <div class="mx-auto max-w-7xl px-4 py-16 sm:px-6 lg:px-8">
+        <div class="prose prose-slate mx-auto text-base leading-7 text-slate-700">
+          <h2 id="seo-heading" class="text-3xl font-bold leading-tight tracking-tight text-slate-900">Build Your
+            Perfect, ATS-Friendly Resume for Free</h2>
+          <p class="mt-4">In today's competitive job market, a standout resume is more critical than ever. Most large
+            companies use Applicant Tracking Systems (ATS) to screen candidates, and a poorly formatted resume can be
+            automatically rejected before a human ever sees it. That's where ResumMate comes in. Our free resume builder
+            is designed to create professional, clean, and ATS-friendly resumes that highlight your skills and
+            experience effectively.</p>
+          <p class="mt-4">Our tool guides you through every essential section, from personal information and a
+            compelling summary to your work experience, skills, and education. We focus on proven layouts that are easy
+            for both recruiters and software to read. With ResumMate, you're not just filling out a template; you're
+            building a strategic document designed to pass the initial screening and impress hiring managers. Forget
+            about fighting with word processors and complex formatting. Our intuitive interface allows you to focus on
+            what truly matters: your content.</p>
+          <h3 class="text-2xl font-semibold leading-tight tracking-tight text-slate-800 mt-12">Why an ATS-Optimized
+            Resume Matters</h3>
+          <p class="mt-4">An Applicant Tracking System is software that scans resumes for keywords, job titles, and
+            specific formatting. If your resume isn't optimized for these systems, it might never reach the hiring
+            manager's desk. Key elements for ATS compliance include standard fonts, clear section headings, and relevant
+            keywords from the job description. Our builder ensures your resume adheres to these best practices,
+            significantly increasing your chances of landing an interview. You can confidently apply for jobs knowing
+            your resume is built to succeed.</p>
+          <h3 class="text-2xl font-semibold leading-tight tracking-tight text-slate-800 mt-12">Your Privacy is Our
+            Priority</h3>
+          <p class="mt-4">We believe your personal data should remain just that—personal. ResumMate operates entirely
+            within your browser. All the information you enter is stored locally on your device and is never sent to our
+            servers. You can create, edit, and save your draft with the peace of mind that your information is secure
+            and private. When you're ready, you can export a high-quality PDF of your resume with a single click. Start
+            building your future today with a tool that respects your privacy and empowers your career goals.</p>
+        </div>
+      </div>
+    </section>
+    <!-- FAQ Section -->
+    <div class="py-12 bg-slate-50">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="lg:text-center">
+          <h2 class="text-3xl leading-8 font-extrabold tracking-tight text-gray-900 sm:text-4xl">
+            Frequently Asked Questions
+          </h2>
+        </div>
+        <div class="mt-10 max-w-3xl mx-auto">
+          <dl class="space-y-8">
+            <div>
+              <dt class="text-lg font-medium text-gray-900">What is an ATS-friendly resume?</dt>
+              <dd class="mt-2 text-base text-gray-500">
+                An Applicant Tracking System (ATS) is software used by companies to scan and rank job applications. An
+                <strong>ATS-friendly resume</strong> is formatted to be easily read by this software, using a clean
+                layout, standard fonts, and clear sections. This increases your chances of your application being seen
+                by a human recruiter.
+              </dd>
+            </div>
+            <div>
+              <dt class="text-lg font-medium text-gray-900">Is Resume Mate really free?</dt>
+              <dd class="mt-2 text-base text-gray-500">
+                Yes, it's 100% free. There are no hidden fees, premium versions, or account requirements. Our goal is to
+                provide a simple, accessible tool for everyone.
+              </dd>
+            </div>
+            <div>
+              <dt class="text-lg font-medium text-gray-900">Do you store my personal data?</dt>
+              <dd class="mt-2 text-base text-gray-500">
+                No. We are a privacy-first service. All the information you enter is stored locally in your browser's
+                storage and is never sent to our servers. If you clear your browser cache, the data will be gone.
+              </dd>
+            </div>
+            <div>
+              <dt class="text-lg font-medium text-gray-900">Why should I use an ATS-friendly resume builder?</dt>
+              <dd class="mt-2 text-base text-gray-500">
+                Over 90% of large companies use an ATS to filter candidates. If your resume isn't formatted correctly,
+                it might be automatically rejected before a person ever sees it. Using a builder designed for this
+                purpose ensures your skills and experience are properly recognized.
+              </dd>
+            </div>
+          </dl>
+        </div>
       </div>
     </div>
   </main>
 </template>
 
 <script setup lang="ts">
-import { ref, watch, onMounted, computed, onUnmounted } from 'vue'
-import { createReactiveResume, saveDraft, clearDraft as clearStorage, defaultResume } from '../state/resume'
+import { onMounted } from 'vue'
 import { setMeta } from '../utils/seo'
-import type { ResumeData } from '~/components/ResumeTemplate.vue'
 
 onMounted(() => {
   setMeta({
-    title: 'Resume Mate — Build ATS-friendly resumes',
-    description: 'Create ATS-optimized resumes with live preview, local drafts, and PDF export. Privacy-first and easy to use.',
+    title: 'Free ATS-Friendly Resume Builder | Create an ATS Resume',
+    description: 'Build a professional, ATS-friendly resume for free. Our resume builder helps you create a job-winning resume that passes Applicant Tracking Systems. Features live preview, privacy-first design, and PDF export.',
     url: window.location.href,
   })
-
-  // Listen for global header actions
-  const onExportEvent = () => onExport()
-  const onClearEvent = () => onClear()
-  window.addEventListener('export-pdf', onExportEvent)
-  window.addEventListener('clear-draft', onClearEvent)
-
-  // cleanup on unmount
-  const removeListeners = () => {
-    window.removeEventListener('export-pdf', onExportEvent)
-    window.removeEventListener('clear-draft', onClearEvent)
-  }
-  // attach to window so it's removable later
-  ;(window as any).__remove_resume_listeners = removeListeners
 })
-
-// cleanup on unmount
-onUnmounted(() => {
-  const rm = (window as any).__remove_resume_listeners
-  if (rm) rm()
-})
-
-const resume = ref<ResumeData>(createReactiveResume() as unknown as ResumeData)
-
-const tabs = [
-  { id: 'layout', label: 'Sections' },
-  { id: 'personal-info', label: 'Personal' },
-  { id: 'summary', label: 'Summary' },
-  { id: 'skills', label: 'Skills' },
-  { id: 'languages', label: 'Languages' },
-  { id: 'experience', label: 'Experience' },
-  { id: 'projects', label: 'Projects' },
-  { id: 'education', label: 'Education' },
-]
-const currentTab = ref('personal-info')
-
-watch(
-  resume,
-  (val) => {
-    saveDraft(val as any)
-  },
-  { deep: true }
-)
-
-async function onExport() {
-  try {
-    const node = document.getElementById('resume-preview')
-    if (!node) {
-      alert('Preview not ready yet. Please try again in a moment.')
-      return
-    }
-    // Wait for fonts to load to avoid layout shifts in PDF
-    if (typeof document !== 'undefined' && (document as any).fonts && (document as any).fonts.ready) {
-      await (document as any).fonts.ready
-    }
-    const name = `${resume.value.personal.firstName || 'Resume'}_${resume.value.personal.lastName || ''}`.trim()
-    const { exportElementToPdf } = await import('~/components/PDFExportHelper.js')
-    await exportElementToPdf(node, `${name || 'resume'}.pdf`)
-  } catch (err) {
-    console.error('PDF export failed:', err)
-    alert('PDF export failed. Please try again in a moment.')
-  }
-}
-
-function onClear() {
-  if (confirm('Clear all data from this draft?')) {
-    clearStorage()
-    resume.value = defaultResume() as unknown as ResumeData
-  }
-}
-
-function addExperience() {
-  resume.value.experience.push({ title: '', company: '', location: '', start: '', end: '', current: false, bullets: [''] })
-}
-function removeExperience(index: number) {
-  resume.value.experience.splice(index, 1)
-}
-function removeBullet(jobIndex: number, bulletIndex: number) {
-  resume.value.experience[jobIndex].bullets.splice(bulletIndex, 1)
-}
-
-function addEducation() {
-  resume.value.education.push({ degree: '', institution: '', location: '', start: '', end: '', details: '' })
-}
-function removeEducation(index: number) {
-  resume.value.education.splice(index, 1)
-}
-
-const skillInput = ref('')
-function addSkill() {
-  const raw = skillInput.value.trim()
-  if (!raw) return
-  const parts = raw.split(',').map((s) => s.trim()).filter(Boolean)
-  resume.value.skills.push(...parts)
-  skillInput.value = ''
-}
-function removeSkill(index: number) {
-  resume.value.skills.splice(index, 1)
-}
-
-const languageInput = ref('')
-function addLanguage() {
-  const raw = languageInput.value.trim()
-  if (!raw) return
-  const parts = raw.split(',').map((s) => s.trim()).filter(Boolean)
-  resume.value.languages.push(...parts)
-  languageInput.value = ''
-}
-function removeLanguage(index: number) {
-  resume.value.languages.splice(index, 1)
-}
-
-function addProject() {
-  resume.value.projects.push({ name: '', link: '', description: '', date: '' })
-}
-function removeProject(index: number) {
-  resume.value.projects.splice(index, 1)
-}
-
-const currentIndex = computed(() => tabs.findIndex((t) => t.id === currentTab.value))
-const isFirst = computed(() => currentIndex.value <= 0)
-const isLast = computed(() => currentIndex.value >= tabs.length - 1)
-
-function goNext() {
-  if (isLast.value) return
-  currentTab.value = tabs[currentIndex.value + 1].id
-  scrollToTab()
-}
-function goPrev() {
-  if (isFirst.value) return
-  currentTab.value = tabs[currentIndex.value - 1].id
-  scrollToTab()
-}
-function scrollToTab() {
-  setTimeout(() => {
-    const el = document.getElementById(currentTab.value)
-    if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' })
-  }, 50)
-}
-
-// Drag and drop for section order
-let dragIndex = -1
-function onDragStart(index: number) {
-  dragIndex = index
-}
-function onDrop(targetIndex: number) {
-  if (dragIndex === -1 || dragIndex === targetIndex) return
-  const order = [...(resume.value.sectionOrder || [])]
-  const [moved] = order.splice(dragIndex, 1)
-  order.splice(targetIndex, 0, moved)
-  resume.value.sectionOrder = order as any
-  dragIndex = -1
-}
-
-const sectionLabels: Record<string, string> = {
-  personal: 'Personal Info',
-  summary: 'Summary',
-  skills: 'Skills',
-  languages: 'Languages',
-  experience: 'Experience',
-  projects: 'Projects',
-  education: 'Education',
-}
 </script>
 
 <style scoped>
 .form-input {
   @apply mt-1 w-full rounded-lg border border-slate-300 bg-white px-3 py-2 text-sm text-slate-800 shadow-sm outline-none ring-0 placeholder:text-slate-400 focus:border-blue-600 focus:ring-2 focus:ring-blue-100;
 }
+
 .form-textarea {
   @apply mt-1 w-full rounded-lg border border-slate-300 bg-white px-3 py-2 text-sm text-slate-800 shadow-sm outline-none ring-0 placeholder:text-slate-400 focus:border-blue-600 focus:ring-2 focus:ring-blue-100;
-}
-/* Make top tabs horizontally scrollable on small screens */
-.tabs-scroll {
-  overflow-x: auto;
-  -webkit-overflow-scrolling: touch;
-  scrollbar-width: none;
-}
-
-/* update cursor when dragging */
-[draggable="true"]:active {
-  cursor: grabbing !important;
-}
-[draggable="true"] {
-  cursor: grab;
-}
-/* Hide number input spinners */
-input[type="number"]::-webkit-inner-spin-button,
-input[type="number"]::-webkit-outer-spin-button {
-  -webkit-appearance: none;
-  margin: 0;
-}
-input[type="number"] {
-  -moz-appearance: textfield;
-}
-/* Fix for iOS Safari zooming in on inputs */
-input, textarea,
-select {
-  font-size: 16px;
-}
-/* Prevent layout shift when fonts load */
-body {
-  font-display: swap;
-}
-/* Smooth scrolling for anchor links */
-html {
-  scroll-behavior: smooth;
-}
-/* Prevent horizontal layout shift when showing focus ring */
-button:focus,
-input:focus,
-textarea:focus {
-  outline-offset: 2px;
-}
-/* Reduce motion for users who prefer it */
-@media (prefers-reduced-motion: reduce) {
-  *, *::before, *::after {
-    animation-duration: 0.01ms !important;
-    animation-iteration-count: 1 !important;
-    transition-duration: 0.01ms !important;
-    scroll-behavior: auto !important;
-  }
-}
-/* PDF export: avoid page breaks inside sections */
-@media print {
-  section {
-    page-break-inside: avoid;
-  }
 }
 </style>

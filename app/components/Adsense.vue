@@ -24,7 +24,7 @@ const props = withDefaults(defineProps<Props>(), {
 const mounted = ref(false)
 
 onMounted(() => {
-  const client = props.client || (import.meta.env.VITE_ADSENSE_CLIENT as string) || ''
+  const client = props.client
   if (!client) return
 
   // Load AdSense script only once
