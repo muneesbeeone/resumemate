@@ -245,12 +245,16 @@
         </div>
       </div>
     </div>
+    <div className="my-3 flex justify-center">
+      <Adsense class="max-w-[728px] w-full" client="ca-pub-123456789" slot="9783500294" format="auto" responsive="true" />
+    </div>
   </main>
 </template>
 
 <script setup lang="ts">
 import { onMounted } from 'vue'
 import { setMeta } from '../utils/seo'
+import Adsense from '~/components/Adsense.vue'
 
 onMounted(() => {
   setMeta({

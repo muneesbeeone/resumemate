@@ -2,7 +2,6 @@
 import { ref } from 'vue'
 import { useRoute } from 'vue-router'
 import { computed } from 'vue'
-import Adsense from './components/Adsense.vue'
 
 const isDrawerOpen = ref(false)
 
@@ -119,9 +118,7 @@ const isHomePage = computed(() => route.path === '/')
     <main>
       <NuxtPage></NuxtPage>
     </main>
-    <div className="my-3 flex justify-center">
-      <Adsense class="max-w-[728px] w-full" client="ca-pub-123456789" slot="9783500294" format="auto" responsive="true" />
-    </div>
+    
     <!-- Global footer -->
     <footer class="border-t border-slate-200 bg-white">
       <div class="mx-auto max-w-7xl space-y-2 px-4 py-6 text-center text-sm text-slate-500">
