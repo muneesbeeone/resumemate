@@ -14,7 +14,7 @@ function clearDraft() {
 }
 
 const route = useRoute()
-const isHomePage = computed(() => route.path === '/')
+const isBuilderPage = computed(() => route.path === '/builder')
 </script>
 
 <template>
@@ -24,7 +24,7 @@ const isHomePage = computed(() => route.path === '/')
       <div class="mx-auto max-w-7xl px-4 py-4">
         <div class="flex items-center justify-between">
           <div class="flex items-center gap-3">
-            <a href="#/" class="flex items-center gap-3">
+            <NuxtLink to="/" class="flex items-center gap-3">
               <div
                 class="flex h-9 w-9 items-center justify-center rounded-xl bg-gradient-to-br from-blue-600 to-indigo-600 text-white shadow-sm">
                 <img src="/logo.svg" alt="ResumMate Logo" class="" />
@@ -33,7 +33,7 @@ const isHomePage = computed(() => route.path === '/')
                 <h1 class="text-lg font-semibold tracking-tight">ResumMate</h1>
                 <p class="text-xs text-slate-500">Free, ATS-friendly resume builder</p>
               </div>
-            </a>
+            </NuxtLink>
           </div>
 
           <!-- Hamburger button (mobile) -->
@@ -50,7 +50,7 @@ const isHomePage = computed(() => route.path === '/')
 
           <!-- Desktop navigation -->
           <nav class="hidden items-center gap-2 sm:flex">
-            <NuxtLink to="/" class="rounded-lg px-3 py-1.5 text-sm font-medium text-slate-700 hover:bg-slate-50">Builder
+            <NuxtLink to="/" class="rounded-lg px-3 py-1.5 text-sm font-medium text-slate-700 hover:bg-slate-50">Home
             </NuxtLink>
             <NuxtLink to="/tips" class="rounded-lg px-3 py-1.5 text-sm font-medium text-slate-700 hover:bg-slate-50">
               Resume Tips</NuxtLink>
@@ -58,7 +58,7 @@ const isHomePage = computed(() => route.path === '/')
               class="rounded-lg px-3 py-1.5 text-sm font-medium text-slate-700 hover:bg-slate-50">Examples</NuxtLink>
             <NuxtLink to="/about" class="rounded-lg px-3 py-1.5 text-sm font-medium text-slate-700 hover:bg-slate-50">
               About</NuxtLink>
-            <div class="ml-4 flex items-center gap-2">
+            <div class="ml-4 flex items-center gap-2" v-if="isBuilderPage">
               <button @click="exportPdf"
                 class="inline-flex items-center gap-2 rounded-lg bg-blue-600 px-3 py-1.5 text-sm font-medium text-white shadow-sm hover:bg-blue-700">Export
                 PDF</button>
