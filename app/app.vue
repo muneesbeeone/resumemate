@@ -27,10 +27,7 @@ const isHomePage = computed(() => route.path === '/')
             <a href="#/" class="flex items-center gap-3">
               <div
                 class="flex h-9 w-9 items-center justify-center rounded-xl bg-gradient-to-br from-blue-600 to-indigo-600 text-white shadow-sm">
-                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="h-5 w-5">
-                  <path
-                    d="M12 2a10 10 0 100 20 10 10 0 000-20zm1 5a1 1 0 10-2 0v5.382l-3.447 3.447a1 1 0 101.414 1.414L12 13.414l3.033 3.033a1 1 0 001.414-1.414L13 12.382V7z" />
-                </svg>
+                <img src="/logo.svg" alt="ResumMate Logo" class="" />
               </div>
               <div>
                 <h1 class="text-lg font-semibold tracking-tight">ResumMate</h1>
