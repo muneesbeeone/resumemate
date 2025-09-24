@@ -8,15 +8,10 @@ export default defineNuxtConfig({
     '@nuxt/icon',
     '@nuxt/image',
     '@nuxt/scripts',
-    '@nuxtjs/tailwindcss'
+    '@nuxtjs/tailwindcss',
+    '@nuxtjs/google-adsense'
   ],
-
-  scripts: {
-    // @ts-expect-error: 'crossorigin' is a valid attribute
-    'adsense-script': {
-      src: 'https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4391323106927085',
-      crossorigin: 'anonymous',
-      strategy: 'afterInteractive'
-    }
-  }
+  googleAdsense: {
+    id: 'ca-pub-4391323106927085'
+  },
 })
