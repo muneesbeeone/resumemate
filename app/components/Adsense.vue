@@ -22,6 +22,8 @@ interface Props {
 }
 
 const props = withDefaults(defineProps<Props>(), {
+  client: 'ca-pub-4391323106927085',
+  slot: '9783500294',
   format: 'auto',
   responsive: 'true',
 });
