@@ -286,7 +286,7 @@ import Adsense from '~/components/Adsense.vue'
 
 onMounted(() => {
   setMeta({
-    title: 'ResumMate — Build ATS friendly resumes',
+    title: 'ResuMate — Build ATS friendly resumes',
     description: 'Create ATS-optimized resumes with live preview, local drafts, and PDF export. Privacy-first and easy to use.',
     url: window.location.href,
   })

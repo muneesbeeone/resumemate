@@ -173,12 +173,12 @@
             Perfect, ATS-Friendly Resume for Free</h2>
           <p class="mt-4">In today's competitive job market, a standout resume is more critical than ever. Most large
             companies use Applicant Tracking Systems (ATS) to screen candidates, and a poorly formatted resume can be
-            automatically rejected before a human ever sees it. That's where ResumMate comes in. Our free resume builder
+            automatically rejected before a human ever sees it. That's where ResuMate comes in. Our free resume builder
             is designed to create professional, clean, and ATS-friendly resumes that highlight your skills and
             experience effectively.</p>
           <p class="mt-4">Our tool guides you through every essential section, from personal information and a
             compelling summary to your work experience, skills, and education. We focus on proven layouts that are easy
-            for both recruiters and software to read. With ResumMate, you're not just filling out a template; you're
+            for both recruiters and software to read. With ResuMate, you're not just filling out a template; you're
             building a strategic document designed to pass the initial screening and impress hiring managers. Forget
             about fighting with word processors and complex formatting. Our intuitive interface allows you to focus on
             what truly matters: your content.</p>
@@ -192,7 +192,7 @@
             your resume is built to succeed.</p>
           <h3 class="text-2xl font-semibold leading-tight tracking-tight text-slate-800 mt-12">Your Privacy is Our
             Priority</h3>
-          <p class="mt-4">We believe your personal data should remain just that—personal. ResumMate operates entirely
+          <p class="mt-4">We believe your personal data should remain just that—personal. ResuMate operates entirely
             within your browser. All the information you enter is stored locally on your device and is never sent to our
             servers. You can create, edit, and save your draft with the peace of mind that your information is secure
             and private. When you're ready, you can export a high-quality PDF of your resume with a single click. Start
