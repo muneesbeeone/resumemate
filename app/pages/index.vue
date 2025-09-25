@@ -258,7 +258,7 @@ import Adsense from '~/components/Adsense.vue'
 
 onMounted(() => {
   setMeta({
-    title: 'Free ATS-Friendly Resume Builder | Create an ATS Resume',
+    title: 'ResuMate | Free ATS Friendly Resume Builder | Create an ATS Resume',
     description: 'Build a professional, ATS-friendly resume for free. Our resume builder helps you create a job-winning resume that passes Applicant Tracking Systems. Features live preview, privacy-first design, and PDF export.',
     url: window.location.href,
   })

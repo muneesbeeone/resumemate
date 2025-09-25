@@ -1,14 +1,14 @@
 <template>
   <section class="mx-auto max-w-4xl px-4 py-12">
-    <h1 class="text-3xl font-bold text-slate-900">About SwiftResume</h1>
-    <p class="mt-3 text-slate-700">SwiftResume is a free, single-template resume builder focused on creating ATS-friendly resumes. Your data is stored locally in your browser and you can export a polished PDF when ready.</p>
+    <h1 class="text-3xl font-bold text-slate-900">About ResuMate</h1>
+    <p class="mt-3 text-slate-700">ResuMate is a free, single-template resume builder focused on creating ATS-friendly resumes. Your data is stored locally in your browser and you can export a polished PDF when ready.</p>
 
     <article class="mt-8 space-y-6">
-      <Adsense />
+
 
       <section>
         <h2 class="text-xl font-semibold text-slate-800">About the Product</h2>
-        <p class="mt-2 text-slate-700">SwiftResume is a lightweight, privacy-first resume builder that helps job-seekers create ATS-friendly resumes quickly. It provides a single, well-structured template that emphasizes clear headings, keyword-rich skills, and measurable achievements — all while keeping your data in the browser.</p>
+        <p class="mt-2 text-slate-700">ResuMate is a lightweight, privacy-first resume builder that helps job-seekers create ATS-friendly resumes quickly. It provides a single, well-structured template that emphasizes clear headings, keyword-rich skills, and measurable achievements — all while keeping your data in the browser.</p>
       </section>
 
       <section>
@@ -32,7 +32,9 @@
           <li>Export to PDF when you're ready and upload the file to job sites.</li>
         </ol>
       </section>
-
+<div class="mx-auto max-w-7xl px-4 pb-12">
+      <Adsense class="w-full" client="ca-pub-123456789" slot="9783500294" format="auto" responsive="true" />
+  </div>
       <section>
         <h2 class="text-xl font-semibold text-slate-800">FAQ — Resume Guidance</h2>
         <div class="mt-2 space-y-4 text-slate-700">
@@ -110,8 +112,8 @@ import { setMeta } from '@/utils/seo'
 
 onMounted(() => {
   setMeta({
-    title: 'About SwiftResume — ATS-friendly Resume Builder',
-    description: 'Learn about SwiftResume, its advantages, privacy-first design, and deployment options. Get answers to common resume and technical questions.',
+    title: 'About ResuMate — ATS-friendly Resume Builder',
+    description: 'Learn about ResuMate, its advantages, privacy-first design, and deployment options. Get answers to common resume and technical questions.',
     url: window.location.href,
   })
 })

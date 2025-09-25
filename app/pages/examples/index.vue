@@ -55,8 +55,8 @@ import { setMeta } from '@/utils/seo'
 
 onMounted(() => {
   setMeta({
-    title: 'Resume Examples — SwiftResume',
-    description: 'Example resume snippets for software engineering, product, and marketing roles. Copy sample bullets and adapt to your experience.',
+    title: 'Resume Examples — ResuMate',
+    description: 'Example ATS Friendly resume snippets for software engineering, product, and marketing roles. Copy sample bullets and adapt to your experience.',
     url: window.location.href,
   })
 })

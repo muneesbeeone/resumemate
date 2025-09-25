@@ -115,7 +115,7 @@ const isBuilderPage = computed(() => route.path === '/builder')
     <main>
       <NuxtPage></NuxtPage>
     </main>
-    
+    <Adsense client="ca-pub-123456789" slot="9783500294" format="auto" responsive="true"></Adsense>
     <!-- Global footer -->
     <footer class="border-t border-slate-200 bg-white">
       <div class="mx-auto max-w-7xl space-y-2 px-4 py-6 text-center text-sm text-slate-500">

@@ -69,7 +69,7 @@
 export default {
     head() {
         return {
-            title: 'Terms and Conditions - Resumate',
+            title: 'Terms and Conditions - ResuMate',
             meta: [
                 { hid: 'description', name: 'description', content: 'Read the terms and conditions for using Resumate.' }
             ]

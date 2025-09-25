@@ -4,7 +4,6 @@
     <p class="mt-3 text-slate-700">Practical guidance to make your resume ATS-friendly and compelling for hiring managers.</p>
 
     <article class="mt-8 space-y-6">
-      <Adsense />
       <section>
         <h2 class="text-xl font-semibold text-slate-800">1. Keep it simple and scannable</h2>
         <p class="mt-2 text-slate-700">Use a single-column layout, clear headings, and short bullet points. Recruiters and ATS parse content more reliably when the structure is straightforward.</p>
@@ -71,6 +70,9 @@
       <NuxtLink to="/" class="ml-3 inline-block rounded-lg border border-slate-300 px-4 py-2 text-sm font-medium text-slate-700 hover:bg-slate-50">Back to Builder</NuxtLink>
     </div>
   </section>
+  <div class="mx-auto max-w-7xl px-4 pb-12">
+      <Adsense class="w-full" client="ca-pub-123456789" slot="9783500294" format="auto" responsive="true" />
+  </div>
 </template>
 
 <script setup lang="ts">
@@ -80,7 +82,7 @@ import { setMeta } from '@/utils/seo'
 
 onMounted(() => {
   setMeta({
-    title: 'Resume Tips & Best Practices — SwiftResume',
+    title: 'Resume Tips & Best Practices — resuMate',
     description: 'Make your resume ATS-friendly with practical tips: clear headings, keyword usage, measurable achievements, and formatting guidance.',
     url: window.location.href,
   })

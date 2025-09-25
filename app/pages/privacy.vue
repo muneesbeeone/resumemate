@@ -111,7 +111,7 @@
 export default {
     head() {
         return {
-            title: 'Privacy Policy - Resumate',
+            title: 'Privacy Policy - ResuMate',
             meta: [
                 { hid: 'description', name: 'description', content: 'Read the privacy policy for Resumate to understand how your data is handled.' }
             ]

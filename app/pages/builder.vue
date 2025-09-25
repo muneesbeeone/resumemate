@@ -271,6 +271,9 @@
         </ResumeTemplate>
       </div>
     </div>
+    <div class="mx-auto max-w-7xl px-4 pb-12">
+      <Adsense class="w-full" client="ca-pub-123456789" slot="9783500294" format="auto" responsive="true" />
+  </div>
   </main>
 </template>
 
@@ -279,10 +282,11 @@ import { ref, watch, onMounted, computed, onUnmounted } from 'vue'
 import { createReactiveResume, saveDraft, clearDraft as clearStorage, defaultResume } from '../state/resume'
 import { setMeta } from '../utils/seo'
 import type { ResumeData } from '~/components/ResumeTemplate.vue'
+import Adsense from '~/components/Adsense.vue'
 
 onMounted(() => {
   setMeta({
-    title: 'Resume Mate — Build ATS-friendly resumes',
+    title: 'ResumMate — Build ATS friendly resumes',
     description: 'Create ATS-optimized resumes with live preview, local drafts, and PDF export. Privacy-first and easy to use.',
     url: window.location.href,
   })
