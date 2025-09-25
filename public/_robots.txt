@@ -1,0 +1,3 @@
+User-Agent: *
+Disallow:
+Sitemap: https://resumate.munees.co.in/sitemap.xml
