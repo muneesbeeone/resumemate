@@ -79,24 +79,6 @@
           </div>
         </div>
       </section>
-
-      <section>
-        <h2 class="text-xl font-semibold text-slate-800">Technical & Deployment FAQ</h2>
-        <div class="mt-2 space-y-3 text-slate-700">
-          <div>
-            <strong>Can I host this on GitHub Pages?</strong>
-            <div>Yes — use the provided GitHub Actions or manually build and publish the dist folder. Update the Vite base if your repo name differs.</div>
-          </div>
-          <div>
-            <strong>Is my data private?</strong>
-            <div>Your data is stored locally. This app does not send your resume data to external servers unless you choose to share it or enable third-party services.</div>
-          </div>
-          <div>
-            <strong>How do I enable ads?</strong>
-            <div>Add your AdSense client ID as VITE_ADSENSE_CLIENT in your environment or provide it as a prop to the Ads component. Be sure to follow AdSense policies.</div>
-          </div>
-        </div>
-      </section>
     </article>
 
     <div class="mt-8">
