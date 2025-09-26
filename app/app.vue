@@ -116,6 +116,21 @@ const isBuilderPage = computed(() => route.path === '/builder')
       <NuxtPage></NuxtPage>
     </main>
     <Adsense client="ca-pub-123456789" slot="9783500294" format="auto" responsive="true"></Adsense>
+    <!-- Floating Buy Me a Coffee button -->
+    <a
+      href="https://buymeacoffee.com/munees"
+      target="_blank"
+      rel="noopener noreferrer"
+      aria-label="Support on Buy Me a Coffee"
+      class="print:hidden fixed bottom-4 right-4 z-50 inline-flex items-center gap-2 rounded-full bg-yellow-400 px-4 py-2 font-medium text-slate-900 shadow-lg hover:bg-yellow-300 focus:outline-none focus:ring-2 focus:ring-yellow-500 transition-transform duration-200 hover:scale-105 active:scale-95 bmc-float"
+    >
+      <span class="inline-flex items-center gap-2 bmc-like">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="h-5 w-5">
+          <path d="M3 6.75A.75.75 0 013.75 6h12.5a.75.75 0 01.744.648l.5 3.5A2.75 2.75 0 0115.77 13H13.5a5.5 5.5 0 01-10.9 0H2.75a.75.75 0 010-1.5h.94l.44-3.08A.75.75 0 013 7.75V6.75zm3.1 6.25a4 4 0 007.8 0H6.1zM18 7.5h1.25A2.75 2.75 0 0122 10.25v.5A2.75 2.75 0 0119.25 13H18a.75.75 0 010-1.5h1.25c.69 0 1.25-.56 1.25-1.25v-.5c0-.69-.56-1.25-1.25-1.25H18A.75.75 0 0118 7.5z"/>
+        </svg>
+        <span class="hidden sm:inline">Buy me a coffee</span>
+      </span>
+    </a>
     <!-- Global footer -->
     <footer class="border-t border-slate-200 bg-white">
       <div class="mx-auto max-w-7xl space-y-2 px-4 py-6 text-center text-sm text-slate-500">
@@ -126,4 +141,25 @@ const isBuilderPage = computed(() => route.path === '/builder')
   </div>
 </template>
 
-<style scoped></style>
+<style scoped>
+@keyframes bmcFloat {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-3px); }
+}
+
+.bmc-float {
+  animation: bmcFloat 3s ease-in-out infinite;
+}
+
+/* subtle like-style bob with tiny rotation on inner content */
+@keyframes bmcLike {
+  0%, 100% { transform: translateY(0) rotate(0deg); }
+  25% { transform: translateY(-2px) rotate(-2deg); }
+  50% { transform: translateY(0) rotate(0deg); }
+  75% { transform: translateY(-2px) rotate(2deg); }
+}
+
+.bmc-like {
+  animation: bmcLike 2.5s ease-in-out infinite;
+}
+</style>
